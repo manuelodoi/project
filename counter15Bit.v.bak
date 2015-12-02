@@ -1,0 +1,31 @@
+module counter15Bit(Clock,Reset,Enable,Qx,Qy,Q);
+	input Clock,Reset,Enable;
+	output reg [14:0]Q=15'd0;
+	output reg [7:0] Qx=8'd0;
+	output reg [6:0] Qy=7'd0;
+	
+	always @(posedge Clock)
+		begin
+			if(~Enable)
+				Q<=15'd0;
+			else if(Enable) 
+				Q<=Q+1;
+		end
+	always @(posedge Clock)
+		begin
+			if(~Enable)
+				Qx<=8'd0;
+			else if(Enable) 
+				Qx<=(Q % 8'd115);
+		end
+		
+	always @(posedge Clock)
+		begin
+			if(~Enable)
+				Qy<=7'd0;
+			else if(Qx == 8'd114) 
+				Qy<=Qy+1;
+		end
+	
+	
+endmodule

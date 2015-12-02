@@ -1,0 +1,162 @@
+# Reading C:/altera/15.0/modelsim_ase/tcl/vsim/pref.tcl
+# do memory_game_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim PE vmap 10.3d Lib Mapping Utility 2014.10 Oct  7 2014
+# vmap -modelsim_quiet work rtl_work 
+# Copying C:/altera/15.0/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:/altera/15.0/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/dataPath.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/dataPath.v 
+# -- Compiling module dataPath
+# -- Compiling module counter5Bit
+# -- Compiling module counter15Bit
+# -- Compiling module reg8Bit
+# -- Compiling module reg7Bit
+# -- Compiling module reg3Bit
+# -- Compiling module mux6to1_3Bit
+# 
+# Top level modules:
+# 	dataPath
+# 	counter5Bit
+# 	reg8Bit
+# 	reg7Bit
+# 	reg3Bit
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/controlPath.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/controlPath.v 
+# -- Compiling module controlPath
+# 
+# Top level modules:
+# 	controlPath
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project/vga_adapter {W:/project/vga_adapter/vga_pll.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project/vga_adapter" W:/project/vga_adapter/vga_pll.v 
+# -- Compiling module vga_pll
+# 
+# Top level modules:
+# 	vga_pll
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project/vga_adapter {W:/project/vga_adapter/vga_controller.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project/vga_adapter" W:/project/vga_adapter/vga_controller.v 
+# -- Compiling module vga_controller
+# 
+# Top level modules:
+# 	vga_controller
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project/vga_adapter {W:/project/vga_adapter/vga_address_translator.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project/vga_adapter" W:/project/vga_adapter/vga_address_translator.v 
+# -- Compiling module vga_address_translator
+# 
+# Top level modules:
+# 	vga_address_translator
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project/vga_adapter {W:/project/vga_adapter/vga_adapter.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project/vga_adapter" W:/project/vga_adapter/vga_adapter.v 
+# -- Compiling module vga_adapter
+# 
+# Top level modules:
+# 	vga_adapter
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/fill.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:10 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/fill.v 
+# -- Compiling module memory_game
+# 
+# Top level modules:
+# 	memory_game
+# End time: 23:53:10 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/gamescreen.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:11 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/gamescreen.v 
+# -- Compiling module gamescreen
+# 
+# Top level modules:
+# 	gamescreen
+# End time: 23:53:11 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/pixelratedivider.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:11 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/pixelratedivider.v 
+# -- Compiling module pixelRateDivider
+# 
+# Top level modules:
+# 	pixelRateDivider
+# End time: 23:53:11 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/aluAddress.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:11 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/aluAddress.v 
+# -- Compiling module aluAddress
+# 
+# Top level modules:
+# 	aluAddress
+# End time: 23:53:11 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/startscreen.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:11 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/startscreen.v 
+# -- Compiling module startscreen
+# 
+# Top level modules:
+# 	startscreen
+# End time: 23:53:11 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/win.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:11 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/win.v 
+# -- Compiling module win
+# 
+# Top level modules:
+# 	win
+# End time: 23:53:11 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+W:/project {W:/project/lose.v}
+# Model Technology ModelSim ALTERA vlog 10.3d Compiler 2014.10 Oct  7 2014
+# Start time: 23:53:11 on Nov 24,2015
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+W:/project" W:/project/lose.v 
+# -- Compiling module lose
+# 
+# Top level modules:
+# 	lose
+# End time: 23:53:11 on Nov 24,2015, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+vsim +altera -do memory_game_run_msim_rtl_verilog.do -l msim_transcript -gui verilog.vl_types
+# vsim -gui "+altera" -l msim_transcript -do "memory_game_run_msim_rtl_verilog.do" 
+# Start time: 23:54:03 on Nov 24,2015
+# ** Fatal: (vsim-3370) Top-level design unit 'vl_types' must be an ENTITY, CONFIGURATION , MODULE or PROGRAM
+#    Time: 0 ps  Iteration: 0  Root: / File: NOFILE
+# FATAL ERROR while loading design
+# Error loading design

@@ -1,0 +1,498 @@
+//Control Path
+
+`timescale 1ns/1ns
+
+module controlPath (
+
+reset, clock, counterForRead, counterForInput, counterForGenerate, counterForDraws, 
+start, dividerOut, compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, 
+enRandomSet, enStartX, enStartY, enDivider, enVerdict, enAns5, enAns4, enAns3, enAns2, enAns5, 
+plot, LOAD1, randomSet, startX, startY, aluOp, selColour, selAns
+
+);
+
+	parameter Sreset = 5'b00000, SgetLevel = 5'b00100, ScheckLevel = 5'b00101, SdrawGameScreen = 5'b00110, 
+				SpauseRandom = 5'b00111, SdrawRandom = 5'b01000, SpauseInput = 5'b01001, SgetInput = 5'b01010, 
+				SdrawInput = 5'b01011, Sverify = 5'b01100, Swin = 5'b01101, Slose = 5'b01110, Sstart = 5'b00001, 
+				Sgenerate = 5'b00010, SreadRandom = 5'b00011;
+	
+	parameter fullscreen=2'b00, canvas=2'b01, answer=2'b11;
+	
+				
+	input reset, clock;
+   input [3:0]counterForGenerate;
+   input [2:0]counterForRead, counterForInput;
+	input [14:0]counterForDraws;
+	input start, dividerOut, compare;
+	
+	output reg enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRandomSet,
+				  enStartX, enStartY, enDivider, enVerdict, enAns5, enAns4, enAns3, enAns2, enAns5, plot;
+   output reg LOAD1, randomSet;
+	output reg [7:0]startX;
+	output reg [6:0]startY;
+	output reg [1:0]aluOp;
+	output reg [2:0]selColour, selAns;
+	
+	
+	reg[4:0]currState;
+	reg[4:0]nextState;
+	
+	//Next state logic
+	always@(*)
+		begin: state_table
+		
+		case(currState)
+	
+		Sreset: begin
+			if (start)
+				nextState<=SgetLevel;
+			else 
+				nextState<=Sreset;
+			end
+			
+		SgetLevel: begin
+			if (start)
+				nextState<=ScheckLevel;
+			else if (reset)
+				nextState<=Sreset;
+			else
+				nextState<=SgetLevel;
+			end
+			
+		ScheckLevel: begin
+			nextState<=Sgenerate;
+			end
+			
+		Sgenerate: begin
+			if(counterForGenerate==4'b1111)
+				nextState<=SreadRandom;
+			else 
+				nextState<=Sgenerate;
+			end
+			
+		SreadRandom: begin
+			nextState<=SpauseRandom;
+			end
+			
+		SpauseRandom: begin
+			if(dividerOut==1'b1)
+				nextState<=SdrawInput;
+			else 
+				nextState<=SpauseRandom;
+			end
+			
+		SdrawRandom: begin
+		if(counterForDraws==15'd19200)begin
+		
+			if(counterForRead==5'b101)
+				nextState<=SpauseInput;
+			else 
+				nextState<=SreadRandom;
+			end
+		else 
+			nextState<=SdrawRandom;
+			end
+			
+		SpauseInput: begin
+			nextState<=SgetInput;
+			end
+			
+		SgetInput: begin
+			nextState<=SdrawInput;
+			end
+			
+		SdrawInput: begin
+		if(counterForDraws==15'd324)begin
+			if(counterForInput==5'b101)
+				nextState<=Sverify;
+			else
+				nextState<=SpauseInput;
+			end
+		else 
+			nextState<=SdrawInput;
+			end
+			
+		Sverify: begin
+			if (compare==1'b1)
+				nextState<=Swin;
+			else 
+				nextState<=Slose;
+			end
+			
+		Swin: begin
+			if(start)
+				nextState<=getLevel;
+			else if (reset)
+				nextState<=Sreset;
+			else 
+				nextState<=Swin;
+			end
+			
+		Slose: begin
+			if(reset)
+				nextState<=Sreset;
+			else 
+				nextState<=Slose;
+			end
+			
+		endcase
+	end
+	
+	
+	//Current state logic
+	always@(*)
+		begin:output_logic
+		
+		case(currState)
+		
+			Sreset: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b1;
+				enStartX = 1'b1;
+				startX = ##;
+				enStartY = 1'b1;
+				startY = ##;
+				aluOp = canvas;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'b0;
+				enAns2 = 1'b0;
+				enAns3 = 1'b0;
+				enAns4 = 1'b0;
+				enAns5 = 1'b0;
+				plot = 1'b1;
+				selAns = 2'b00;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'b1;
+				enRandomSet = 1'b0;
+				
+				end
+				
+			SgetLevel: begin
+			
+				enLevel = 1'b1;	
+				enDrawCount = 1'b0;
+				enStartX = 1'b0;
+				startX = 8'bx;
+				enStartY = 1'b0;
+				startY = 8'bx;
+				aluOp = 2'bx;
+				selColour = //colourparam;
+				enDivider = 1'bx;
+				enVerdict = 1'bx;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+		
+			ScheckLevel: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b0;
+				enStartX = 1'b0;
+				startX = 8'bx;
+				enStartY = 1'b0;
+				startY = 8'bx;
+				aluOp = 2'bx;
+				selColour = //colourparam;
+				enDivider = 1'bx;
+				enVerdict = 1'bx;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+		
+			Sgenerate: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b0;
+				enStartX = 1'b0;
+				startX = 8'bx;
+				enStartY = 1'b0;
+				startY = 8'bx;
+				aluOp = 2'bx;
+				selColour = //colourparam;
+				enDivider = 1'bx;
+				enVerdict = 1'bx;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+		
+			SreadRandom: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b0;
+				enStartX = 1'bx;
+				startX = 8'bx;
+				enStartY = 1'bx;
+				startY = 8'bx;
+				aluOp = 2'bx;
+				selColour = //colourparam;
+				enDivider = 1'bx;
+				enVerdict = 1'bx;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b1;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b0;
+				
+				end
+				
+			SpauseRandom: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b0;
+				enStartX = 1'bx;
+				startX = 8'bx;
+				enStartY = 1'bx;
+				startY = 8'bx;
+				aluOp = 2'bx;
+				selColour = //colourparam;
+				enDivider = 1'b1;
+				enVerdict = 1'bx;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			SdrawRandom: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b1;
+				enStartX = 1'b1;
+				startX = ##;
+				enStartY = 1'b1;
+				startY = ##;
+				aluOp = canvas;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b1;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			SgetInput: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b0;
+				enStartX = 1'b0;
+				startX = 8'b0;
+				enStartY = 1'b1;
+				startY = 7'b0;
+				aluOp = 2'bxx;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			SdrawInput: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b1;
+				enStartX = 1'b1;
+				startX = ##;
+				enStartY = 1'b1;
+				startY = ##;
+				aluOp = answer;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b1;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			SpauseInput: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b1;
+				enStartX = 1'b0;
+				startX = 8'bx;
+				enStartY = 1'b0;
+				startY = 7'bx;
+				aluOp = 2'bxx;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'b0;
+				enAns2 = 1'b0;
+				enAns3 = 1'b0;
+				enAns4 = 1'b0;
+				enAns5 = 1'b0;
+				plot = 1'b1;
+				selAns = 1'b0;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			Sverify: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b0;
+				enStartX = 1'b0;
+				startX = 8'b0;
+				enStartY = 1'b0;
+				startY = 7'b0;
+				aluOp = 2'bxx;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b1;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b0;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+			
+			Swin: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b1;
+				enStartX = 1'b1;
+				startX = ##;
+				enStartY = 1'b1;
+				startY = ##;
+				aluOp = canvas;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b1;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			Slose: begin
+			
+				enLevel = 1'b0;	
+				enDrawCount = 1'b1;
+				enStartX = 1'b1;
+				startX = ##;
+				enStartY = 1'b1;
+				startY = ##;
+				aluOp = canvas;
+				selColour = //colourparam;
+				enDivider = 1'b0;
+				enVerdict = 1'b0;
+				enAns1 = 1'bx;
+				enAns2 = 1'bx;
+				enAns3 = 1'bx;
+				enAns4 = 1'bx;
+				enAns5 = 1'bx;
+				plot = 1'b1;
+				selAns = 1'bx;
+				enStoreRandom = 1'b0;
+				enRandomRead = 1'b0;
+				enRandomLoad1 = 1'bx;
+				enRandomSet = 1'b1;
+				
+				end
+				
+			endcase
+			
+		end
+		
+		
+	always@(posedge clock)
+		begin
+			currState<=nextState;
+		end
+		
+endmodule
+
+

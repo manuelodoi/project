@@ -1,0 +1,9 @@
+module inputDecoder(usrInput, value);
+	input [4:0] usrInput; //will change to keyboard
+	output reg [2:0] value;
+	
+	always@(*)
+	begin
+		
+	end
+endmodule

@@ -1,0 +1,3 @@
+module(CLOCK_50, KEY);
+	
+endmodule

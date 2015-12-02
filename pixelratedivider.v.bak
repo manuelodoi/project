@@ -1,0 +1,48 @@
+module pixelRateDivider(clock,level,Enable,reset,out);
+	input clock,reset,Enable;
+	input [2:0] level;
+	output out;
+	reg [19:0] clockCounter = 0;
+	reg [4:0] frameCounter = 0;
+	reg [7:0] maxFrame;
+	parameter [19:0] maxClock = 20'b11001011011100110101;
+	parameter [7:0] l1 = 8'd180,l2=8'd120,l3=8'd60,l4=8'd30,l5=8'd15;//level Parameters
+	
+	always@(*)
+	begin
+		case(level)
+		1: maxFrame <= l1;
+		2: maxFrame <= l2;
+		3: maxFrame <= l3;
+		4: maxFrame <= l4;
+		5: maxFrame <= l5;
+		default: maxFrame = l1;
+		endcase
+	end
+	
+	always@(posedge clock)
+		begin
+			if(reset)
+				clockCounter <=0;
+			else if(Enable) begin
+				if(clockCounter == maxClock)
+					clockCounter <= 0;
+				else
+					clockCounter <= clockCounter + 1;
+			end
+		end
+		
+		always@(posedge clock)
+			begin
+				if(reset) 
+					frameCounter <= 0;
+				else if(Enable) begin
+					if(frameCounter == maxFrame)
+						frameCounter <= 0;
+					else if(clockCounter == maxClock)
+						frameCounter <= frameCounter + 1;
+				end
+			end
+			
+			assign out = (frameCounter == maxFrame)? 1: 0;		
+endmodule

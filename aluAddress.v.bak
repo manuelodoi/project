@@ -1,0 +1,26 @@
+module aluAddress(counter,startX,startY,aluOp,out);
+	input [14:0] counter;
+	input [7:0] startX;
+	input [6:0] startY;
+	input Enable;
+	output [14:0] out;
+	
+	//ALU Operations
+	parameter [2:0] fullscreen=3'b000, canvas=3'b001, legend=3'b010, answer=3'b011;
+	
+	/*Division and Modulus values
+	fsValue = 160 | csValue = 110 | lgValue = 40 | asValue = 18
+	*/
+	parameter [7:0] fsValue=8'b10100000, csValue=8'b01101110, lgValue=8'b00101000, asValue=8'b00010010;
+	
+	if(aluOp == fullscreen) //120 x 160
+		assign out = {startY + (counter / fsValue),startX + (counter%fsValue)};
+	else if (aluOp == canvas) //60 x 110 
+		assign out = {startY + (counter / csValue),startX + (counter%csValue)};
+	else if (aluOp == legend) //60 x 40 
+		assign out = {startY + (counter / lgValue),startX + (counter%lgValue)};
+	else if (aluOp == answer) //18 x 18 
+		assign out = {startY + (counter / asValue),startX + (counter%asValue)};
+	else
+		assign out = 15'bxxxxxxxxxxxxxxx;
+endmodule

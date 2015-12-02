@@ -1,0 +1,45 @@
+Warning (10268): Verilog HDL information at sequence_datapath.v(27): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at dataPath.v(201): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at dataPath.v(232): always construct contains both blocking and non-blocking assignments
+Info (10281): Verilog HDL Declaration information at dataPath.v(223): object "black" differs only in case from object "Black" in the same scope
+Warning (10273): Verilog HDL warning at controlPath.v(216): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(241): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(265): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(280): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(289): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(313): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(328): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(337): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(352): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(361): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(376): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(385): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(400): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(409): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(433): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(457): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(471): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(481): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(497): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(531): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(550): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(571): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(586): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(596): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(623): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(637): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(639): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(647): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(661): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(663): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(671): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(685): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(687): extended using "x" or "z"
+Warning (10273): Verilog HDL warning at controlPath.v(695): extended using "x" or "z"
+Info (10281): Verilog HDL Declaration information at fill.v(29): object "HEX0" differs only in case from object "hex0" in the same scope
+Info (10281): Verilog HDL Declaration information at fill.v(29): object "HEX1" differs only in case from object "hex1" in the same scope
+Info (10281): Verilog HDL Declaration information at fill.v(29): object "HEX2" differs only in case from object "hex2" in the same scope
+Info (10281): Verilog HDL Declaration information at fill.v(29): object "HEX3" differs only in case from object "hex3" in the same scope
+Info (10281): Verilog HDL Declaration information at fill.v(29): object "HEX4" differs only in case from object "hex4" in the same scope
+Info (10281): Verilog HDL Declaration information at fill.v(29): object "HEX5" differs only in case from object "hex5" in the same scope
+Warning (10268): Verilog HDL information at pixelratedivider.v(18): always construct contains both blocking and non-blocking assignments

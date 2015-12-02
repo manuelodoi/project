@@ -1,0 +1,121 @@
+module dataPath(X,Y,Color,Xout,Yout,Colorout,CountValue,enRegX,enRegY,enCount,
+					enColor,Clock,enALU,Reset,SelectPath,enBlackCount,Xreg,Yreg);
+	input [7:0] X;
+	input [6:0] Y;
+	input [2:0] Color;
+	input enRegX,enRegY,enCount,enColor,Clock,enALU,Reset,SelectPath,enBlackCount;
+	output [7:0] Xout;
+	output [6:0] Yout;
+	output [7:0] Xreg;
+	output [6:0] Yreg;
+	output [2:0] Colorout;
+	output [14:0] CountValue;
+	
+	wire [2:0] black,fromRegColor;
+	wire [3:0] fromCount;
+	wire [7:0] fromRegX,aluX;
+	wire [6:0] fromRegY,aluY;
+	wire [14:0] fromBlackCount;
+	
+	assign Xreg = fromRegX;
+	assign Yreg = fromRegY;
+	assign black = 3'b000;
+	
+	counter15Bit count160x120(Clock,Reset,enBlackCount,fromBlackCount);
+	counter4Bit count16(Clock,Reset,enCount,fromCount);
+	reg8Bit regX(X,Clock,Reset,enRegX,fromRegX);
+	reg7Bit regY(Y,Clock,Reset,enRegY,fromRegY);
+	reg3Bit regC(Color,Clock,Reset,enColor,fromRegColor);
+	ALU alu0(fromRegX,fromRegY,fromCount,enALU,aluX,aluY);
+	mux2to1_3Bit muxColor(SelectPath,fromRegColor,black,Colorout);
+	mux2to1_15Bit muxXY(SelectPath,{aluY,aluX},fromBlackCount,{Yout,Xout});
+	mux2to1_15Bit muxCounter(SelectPath,{11'b0,fromCount},fromBlackCount,CountValue);
+endmodule
+
+module ALU(X,Y,Counter,Enable,Xout,Yout);
+	input [7:0] X;
+	input [6:0] Y;
+	input [3:0] Counter;
+	input Enable;
+	output reg [7:0] Xout;
+	output reg [6:0] Yout;
+	
+	always@(*)
+		if(Enable)
+		begin
+			Xout <= X + Counter[1:0];
+			Yout <= Y + Counter[3:2];
+		end
+endmodule
+
+module counter4Bit(Clock,Reset,Enable,Q);
+	input Clock,Reset,Enable;
+	output reg [3:0] Q;
+	
+	always@(posedge Clock)
+		if(Reset)
+			Q <= 4'b0000;
+		else if(Enable)
+			Q <= Q+1;
+endmodule
+
+module counter15Bit(Clock,Reset,Enable,Q);
+	input Clock,Reset,Enable;
+	output reg [14:0] Q;
+	
+	always@(posedge Clock)
+		if(Reset)
+			Q <= 15'b000000000000000;
+		else if(Enable)
+			Q <= Q+1;
+endmodule
+
+module reg8Bit(D,Clock,Reset,Enable,Q);
+	input Clock,Reset,Enable;
+	input [7:0] D;
+	output reg [7:0] Q;
+	
+	always@(posedge Clock)
+		if(Reset)
+			Q <= 8'b00000000;
+		else if(Enable)
+			Q <= D;
+endmodule
+
+module reg7Bit(D,Clock,Reset,Enable,Q);
+	input Clock,Reset,Enable;
+	input [6:0] D;
+	output reg [6:0] Q;
+	
+	always@(posedge Clock)
+		if(Reset)
+			Q <= 7'b0000000;
+		else if(Enable)
+			Q <= D;
+endmodule
+
+module reg3Bit(D,Clock,Reset,Enable,Q);
+	input Clock,Reset,Enable;
+	input [2:0] D;
+	output reg [2:0] Q;
+	
+	always@(posedge Clock)
+		if(Reset)
+			Q <= 3'b000;
+		else if(Enable)
+			Q <= D;
+endmodule	
+
+module mux2to1_3Bit(s,x1,y0,MUXout);
+	input s;
+	input [2:0] x1,y0;
+	output [2:0] MUXout;
+	assign MUXout = (s)? x1 : y0;		
+endmodule	
+
+module mux2to1_15Bit(s,x1,y0,MUXout);
+	input s;
+	input [14:0] x1,y0;
+	output [14:0] MUXout;
+	assign MUXout = (s)? x1 : y0;		
+endmodule	
