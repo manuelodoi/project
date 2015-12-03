@@ -1,8 +1,8 @@
-module dataPath (usrAns, inLevel, keyPressed, key2Pressed, cReset, toCompare, compareR, allAns,
-Reset, Clock, counterForRead, counterForInput, counterForGenerate, counterForDraws,
-compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRandomSet, 
- enDivider, enAns5, enAns4, enAns3, enAns2, enAns1,selStart,
- aluOp, selColour,selAns,address,colour, csEnable, fsEnable, ansEnable);
+	module dataPath (usrAns, inLevel, keyPressed, key2Pressed, cReset, toCompare, compareR, allAns,
+	Reset, Clock, counterForRead, counterForInput, counterForGenerate, counterForDraws,
+	compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRandomSet, 
+	enDivider, enAns5, enAns4, enAns3, enAns2, enAns1,selStart,
+	aluOp, selColour,selAns,address,colour, csEnable, fsEnable, ansEnable);
 	input [2:0] selStart;
 	input [2:0] inLevel; //This receives the level input;
 	input [2:0] usrAns; //User's input for answers
