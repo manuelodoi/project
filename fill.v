@@ -100,30 +100,35 @@ module memory_game
 		defparam VGA.BACKGROUND_IMAGE = "game.mif";
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn
+	
+	//the following are instatiations of support modules that are part of the 
+	//datapath, but it was easier to instantiate them from the top module
 	pixelRateDivider prd1(CLOCK_50,dividerOut,LEDR[9], SW[2:0]);
 	counterToFive ctf(CLOCK_50, enDivider, cReset, counterForRead);
 	randomGenerate rg(CLOCK_50, enRandomSet, cReset, seqOut);
 	mux2to1 muxColor1(sel2color,colour1,colour2,colour); 
 	mux5to1 muxColor2(counterForRead,seqOut,colour2);
-	hexDisplay hex0(counterForInput, HEX0);
+	
+	hexDisplay hex0(counterForInput, HEX0); //all hex displays used for testing
 	hexDisplay hex1({1'b0,allAns[2:0]}, HEX1);
 	hexDisplay hex2({1'b0,allAns[5:3]}, HEX2);
 	hexDisplay hex3({1'b0,allAns[8:6]}, HEX3);
 	hexDisplay hex4({1'b0,allAns[11:9]}, HEX4);
 	hexDisplay hex5({1'b0,allAns[14:12]}, HEX5);
 	
-	// for the VGA controller, in addition to any other functionality your design may require.
+	//internal signals, enables, resets etc...
 	reg [3:0] toh1,toh2, toh3,toh4,toh5;
 	wire [3:0]counterForGenerate,countfr;
-   wire [3:0]counterForRead, counterForInput;
+   	wire [3:0]counterForRead, counterForInput;
 	wire [14:0]counterForDraws,toCompare,seqOut,allAns;
 	wire  dividerOut, compare,cReset;
 	wire csEnable, fsEnable, ansEnable;
 	wire enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRandomSet,
 				   enDivider, enAns5, enAns4, enAns3, enAns2,enAns1;
-   wire [2:0]selStart;
+   	wire [2:0]selStart;
 	wire [1:0]aluOp;
 	wire [2:0]selColour, selAns;
+	
     // Instanciate FSM control
 	 controlPath c1(SW[2:0],cReset,~KEY[1], ~KEY[2],
 ~KEY[0], CLOCK_50, counterForRead, counterForInput, counterForGenerate, counterForDraws,~KEY[3],dividerOut,
