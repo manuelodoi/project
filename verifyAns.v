@@ -1,3 +1,5 @@
+//simple module, compares user input and correct sequence
+
 module verifyAns(fromRG,fromAns,result);
 	input [14:0] fromRG,fromAns;
 	output result;
