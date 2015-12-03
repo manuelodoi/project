@@ -1,3 +1,6 @@
+//this counter takes input from control to determine the start x and y coordinates 
+//and then counts the apropriate amount in orde to draw the correct size and shape
+
 module counter15Bit(Clock,Reset,aluOp,Enable,Qx,Qy,Q);
 	input Clock,Reset,Enable;
 	input [1:0] aluOp;
@@ -26,7 +29,7 @@ module counter15Bit(Clock,Reset,aluOp,Enable,Qx,Qy,Q);
 			end
 		endcase
 	end
-	
+	//controls counter
 	always @(posedge Clock)
 		begin
 			if(~Enable)
@@ -34,6 +37,7 @@ module counter15Bit(Clock,Reset,aluOp,Enable,Qx,Qy,Q);
 			else if(Enable) 
 				Q<=Q+1;
 		end
+	//controls x coordinate changes
 	always @(posedge Clock)
 		begin
 			if(~Enable)
@@ -42,7 +46,7 @@ module counter15Bit(Clock,Reset,aluOp,Enable,Qx,Qy,Q);
 					Qx<=(Q % xLimit);
 			end
 		end
-		
+	//controls y coordinate changes	
 	always @(posedge Clock)
 		begin
 			if(~Enable)
