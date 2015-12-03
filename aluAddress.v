@@ -1,3 +1,7 @@
+//this module takes the changes from the draw counter and adds them to the appropriate start x and y coordinates 
+//then sends these modified coordinates to the VGA
+//Also takes input regarding correct starting positions from control
+
 module aluAddress(Xpos, Ypos, startX, startY, aluOp, out);
 
 	input [7:0] startX, Xpos;
