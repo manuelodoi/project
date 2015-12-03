@@ -1,4 +1,4 @@
-//datapath module and support modules
+//datapath/support modules
 
 module dataPath (usrAns, inLevel, keyPressed, key2Pressed, cReset, toCompare, compareR, allAns,
 Reset, Clock, counterForRead, counterForInput, counterForGenerate, counterForDraws,
