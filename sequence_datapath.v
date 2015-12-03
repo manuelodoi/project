@@ -1,23 +1,8 @@
 `timescale 1ns/1ns
 
-//This module has all the controls and registers regarding the random number generator
-module sequence_datapath (clock, enRandomSet, enRandomLoad1, enStoreRandom, enRandomRead,
-								  toCompare, readOut);
+//This file contains components of the random number generator 
 
-	input clock;
-	input enRandomSet, enRandomLoad1, enStoreRandom, enRandomRead; //some enables for registers, counters
-	wire randomWire;
-	wire [14:0] sequenceWire; //goes to reader module
-	output [14:0]toCompare; //goes to compare module
-	output [2:0]readOut; //goes to VGA
-	
-	generateRandoms randoms(.reset(enRandomSet), .clock(clock), .out(randomWire), .load1(enRandomLoad1));
-	sequenceReg sequenceReg1 (.enable(enStoreRandom), .random(randomWire), .clock(clock), .sequenceIn(sequenceWire), .toCompareOut(toCompare));
-	readOut3bit read1(.sequenceIn(sequenceWire), .clock(clock), .enable(enRandomRead), .out(readOut));
-
-endmodule
-
-//modified 15 bit register that reads in 1 bit at a time from the random generator
+//modified register that stores correct sequence
 module sequenceReg (enable, random, clock, sequenceIn, toCompareOut);
 	input enable;
 	input clock;
@@ -58,44 +43,6 @@ module readOut3bit (sequenceIn, clock, enable, out);
 	end
 endmodule
 
-
-//this module generates random numbers using a sequence of shift registers. The ouputs of registers 3 and 4 are XOR'd together
-//then used as the input for register 1, and also used as the out portion of the module.
-module generateRandoms(reset, clock, out, load1);
-	input reset;
-	input clock;
-	input load1; //this is activated ONLY at Sreset, needed to start generation process (without it, out will always be 0)
-	output out;
-	 
-	wire w1to2, w2to3, w3to4, w4toXOR, XORtoIn;
-	//series of shift registers connected together		
-	shiftReg SR1(.reset(reset), .clock(clock), .in(XORtoIn), .out(w1to2));
-	shiftReg SR2(.reset(reset), .clock(clock), .in(w1to2), .out(w2to3));
-	shiftReg SR3(.reset(reset), .clock(clock), .in(w2to3), .out(w3to4), .load(load1));
-	shiftReg SR4(.reset(reset), .clock(clock), .in(w3to4), .out(w4toXOR));
-
-
-	assign XORtoIn = (w4toXOR ^ w3to4);
-	assign out = w4toXOR;
-endmodule
- 
-module shiftReg(reset, clock, in, out, load);
-	input reset;
-	input clock;
-	input in;
-	input load;
-	output reg out;
-	always@(posedge clock)
-   begin
-		if(load==1'b1)
-			out<=load;
-		else if(~reset)
-			out<=1'b0;
-		else
-         out<=in;
-	end
-endmodule
-
 //seven segment decoder used for testing
 module decoder7segment (inputs, outwire);	
 	input [3:0] inputs;
@@ -124,6 +71,9 @@ module decoder7segment (inputs, outwire);
 		end
 endmodule
 
+
+
+//this is the module that actually generates random output
 module lfsr_6bit(clk, data);
 input clk;
 output reg [5:0] data = 6'h3f;
@@ -131,6 +81,8 @@ output reg [5:0] data = 6'h3f;
 reg [5:0] data_next;
 
 always @(*) begin
+//as you can see, the bits are xor'd together, and change on the clock edge.
+//this module is never reset after it starts running, so every run it will produce different numbers
   data_next[5] = data[5]^data[2];
   data_next[4] = data[4]^data[1];
   data_next[3] = data[3]^data[0];
@@ -147,12 +99,14 @@ always @(posedge clk)
 
 endmodule
 
+//module that ouputs random sequence to the register
 module randomGenerate(Clock, Enable, Reset, out);
 	input Clock,Enable,Reset;
 	output reg [14:0] out;
 	reg [3:0] counter = 4'd0;
 	wire [5:0] data;
 	
+	//lfsr instantiation
 	lfsr_6bit lfsr1(Clock, data);
 	
 	always@(posedge Clock)
@@ -173,6 +127,7 @@ module randomGenerate(Clock, Enable, Reset, out);
 	
 endmodule
 
+//muxes relating to colour selection
 module mux2to1(sel,one,two,colour);
 	input sel;
 	input [2:0] one,two;
