@@ -1,4 +1,4 @@
-module dataPath(usrAns,inLevel,keyPressed,key2Pressed, cReset,toCompare,compareR,allAns,
+module dataPath (usrAns, inLevel, keyPressed, key2Pressed, cReset, toCompare, compareR, allAns,
 Reset, Clock, counterForRead, counterForInput, counterForGenerate, counterForDraws,
 compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRandomSet, 
  enDivider, enAns5, enAns4, enAns3, enAns2, enAns1,selStart,
