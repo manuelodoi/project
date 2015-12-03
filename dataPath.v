@@ -64,13 +64,13 @@ compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRan
 	counter4Bit_sp counterInput(keyPressed,key2Pressed,1'b1,counterForInput);
 	
 	reg3Bit regL(inLevel,Clock,Reset,enLevel,fromRegLevel); //Stores level 
-	multiStorage8Bit regx(Clock,selStart,fromRegX);
-	multiStorage7Bit regy(Clock,selStart,fromRegY);
-	counter15Bit counter1(Clock,cReset,aluOp,enDrawCount, Xpos,Ypos,fromDrawCounter);
-	aluAddress alu1(Xpos, Ypos,fromRegX,fromRegY,aluOp,address);
+	multiStorage8Bit regx(Clock,selStart,fromRegX); //used to select the correct start coordinates for x
+	multiStorage7Bit regy(Clock,selStart,fromRegY); // " " " y
+	counter15Bit counter1(Clock,cReset,aluOp,enDrawCount, Xpos,Ypos,fromDrawCounter); //draw counter
+	aluAddress alu1(Xpos, Ypos,fromRegX,fromRegY,aluOp,address); //sends address to VGA
 	mux6to1_3Bit mux2(selColour,black,gScreen,sScreen,fromRG,wScreen,lScreen,ansColor,colour);
 	
-	assign counterForDraws = fromDrawCounter;
+	assign counterForDraws = fromDrawCounter; //used for testing and loading mif files
 	
 endmodule
 
@@ -138,6 +138,7 @@ module counter4Bit(Clock,Reset,Enable,Q);
 	end
 endmodule
 
+//modified 4 bit counter, crucial for input and proper reseting of the FSM
 module counter4Bit_sp(Clock,Reset,Enable,Q);
 	input Clock,Reset,Enable;
 	output reg [3:0] Q = 4'b0;
@@ -153,7 +154,7 @@ module counter4Bit_sp(Clock,Reset,Enable,Q);
 	end
 endmodule
 
-
+//various registers
 module reg8Bit(D,Clock,Reset,Enable,Q);
 	input Clock,Reset,Enable;
 	input [7:0] D;
@@ -190,6 +191,8 @@ module reg3Bit(D,Clock,Reset,Enable,Q);
 			Q <= D;
 endmodule
 
+
+//modified mux, chooses colors for answer based on input
 module mux5to1_3Bit(selAns,Cans1,Cans2,Cans3,Cans4,Cans5,MUXout);
 	input [2:0] selAns,Cans1,Cans2,Cans3,Cans4,Cans5;
 	output reg [2:0] MUXout;
@@ -219,6 +222,7 @@ module mux5to1_3Bit(selAns,Cans1,Cans2,Cans3,Cans4,Cans5,MUXout);
 	end
 endmodule	
 
+//modified mux, chooses proper mif file to load based on colour choice from FSM
 module mux6to1_3Bit(selColour,black,gScreen,sScreen,fromRG,wScreen,lScreen,ansColor,MUXout);
 	input [2:0] selColour,black,gScreen,sScreen,fromRG,wScreen,lScreen,ansColor;
 	output reg [2:0] MUXout;
