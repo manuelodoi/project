@@ -1,5 +1,5 @@
-//this counter takes input from control to determine the start x and y coordinates 
-//and then counts the apropriate amount in orde to draw the correct size and shape
+//this module is a double counter that counts the apropriate amounts in order to draw the correct size and shape
+//also takes input from control regarding correct size/shape
 
 module counter15Bit(Clock,Reset,aluOp,Enable,Qx,Qy,Q);
 	input Clock,Reset,Enable;
