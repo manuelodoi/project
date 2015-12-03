@@ -28,13 +28,6 @@ compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRan
 	parameter startM=3'd0, startC=3'd1,startA1=3'd2,startA2=3'd3,startA3=3'd4,startA4=3'd5,startA5=3'd6;
 	
 <<<<<<< HEAD
-	input reset, clock, keyPressed, key2Pressed;
-	input [2:0] inLevel;
-   input [3:0]counterForGenerate;
-   input [3:0]counterForRead, counterForInput;
-	input [14:0]counterForDraws;
-	input start, dividerOut, compare;
-=======
 	input reset, clock, keyPressed; //reset, clock, input from keyboard
 	input [2:0] inLevel;		//tells control what level user is on
    	input [3:0]counterForGenerate;	//counter for random number generator
@@ -73,6 +66,8 @@ compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRan
 				nextState<=Sreset;
 		end
 		
+		//this is where the user is sent after completing a level
+		//redraws the start screen, allows user to choose new level
 		SresetDraw: begin
 			if(counterForDraws < csValue)
 				nextState<=SresetDraw;
@@ -173,10 +168,13 @@ compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRan
 				nextState<=SpauseInput;
 		end
 		
+		//this state enables the compare module and allows it to check if the user has entered the correct input
 		Sverify: begin
 			nextState<=SdrawResult;
 		end
 			
+		//the FSM already knows whether the input is correct: this state is where the correct exit screen is drawn,
+		//and nextState is assigned to the correct final state
 		SdrawResult: begin
 			if(counterForDraws<csValue)
 				nextState<=SdrawResult;
@@ -188,7 +186,6 @@ compare, enStoreRandom, enRandomRead, enRandomLoad1, enLevel, enDrawCount, enRan
 			end
 		end
 		
-		//Based on the user's input vs. the correct sequence, the user goes to Swin, or Slose.
 		//To leave these states, the user must choose to go to next level (for win) or reset (for win or lose)
 		Swin: begin
 			if(key2Pressed)
