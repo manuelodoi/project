@@ -1,3 +1,6 @@
+//this file contains modules that take level information and divide the clock frequency accordingly
+
+//holds insantiations of rate divider, and LEDRtest module
 module pixelRateDivider(Clock,out,light, level);
 	input Clock;
 	input [2:0] level;
@@ -9,6 +12,7 @@ module pixelRateDivider(Clock,out,light, level);
 	checkLight cL(out,light);	
 endmodule
 
+//this module takes level input (1-5) and implements the approriate resets/out assignments
 module clkCounter(Clock,out, level);
 	input Clock;
 	input [2:0]level;
@@ -48,6 +52,8 @@ module clkCounter(Clock,out, level);
 		
 endmodule
 
+
+//counter that is used several times throughout the design
 module counterToFive(Clock, Enable, Reset, Q);
 	input Clock,Enable,Reset;
 	output reg [3:0] Q = 4'b0;
@@ -61,6 +67,7 @@ module counterToFive(Clock, Enable, Reset, Q);
 	end
 endmodule
 
+//test module to make sure rate divider is working
 module checkLight(in, out);
 	input in;
 	output reg out;
@@ -71,6 +78,7 @@ module checkLight(in, out);
 	end
 endmodule
 
+//hex display module for testing
 module hexDisplay(c,d);
 	input [3:0] c;
 	output reg [0:6] d;	 
